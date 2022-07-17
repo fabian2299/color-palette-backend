@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Palette {
+  id       Int      @id @default(autoincrement())
+  nameList String
+  circles  Circle[]
+}
+
+model Circle {
+  id        String   @id @default(cuid())
+  circleId  String?
+  color     String
+  Palette   Palette? @relation(fields: [paletteId], references: [id])
+  paletteId Int?
+}
